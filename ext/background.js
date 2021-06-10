@@ -1,5 +1,5 @@
 function createCSPRule() {
-    fetch('https://discord.com/app').then(function (response) {
+    fetch('https://web.skype.com/').then(function (response) {
         let csp = (response.headers.get('Content-Security-Policy'));
         let header = csp.replace(/connect-src ([^;]+);/, "connect-src $1 https://*;");
         header = header.replace(/style-src ([^;]+);/, "style-src $1 https://*;");
@@ -7,7 +7,7 @@ function createCSPRule() {
         header = header.replace(/'nonce-[^']*'/, "");
         return {
             condition: {
-                urlFilter: "||discord.com",
+                urlFilter: "||skype.com",
                 resourceTypes: ["sub_frame"]
             },
             action: {
@@ -22,7 +22,7 @@ function createCSPRule() {
             priority: 2
         };
     }).catch((err) => {
-        console.error('Failed to fetch CSP header from discord.com, will not modify.');
+        console.error('Failed to fetch CSP header from skype.com, will not modify.');
         return {}
     }).then((RELAX_CSP) => {
         chrome.storage.local.get(default_options, function (items) {
@@ -58,7 +58,7 @@ createCSPRule();
 var default_options = {
     "custom_css": "",
     "custom_js": "",
-    "custom_title": "Discord",
+    "custom_title": "Skype",
     "relax_CSP_styles": false
 };
 
@@ -69,7 +69,7 @@ chrome.runtime.onMessage.addListener(
             chrome.webNavigation.getAllFrames({
                 tabId: sender.tab.id
             }, (allFrames) => {
-                var discordFrame = allFrames.filter(el => el.parentFrameId == 0)[0] ? allFrames.filter(el => el.parentFrameId == 0)[0].frameId : 0
+                var skypeFrame = allFrames.filter(el => el.parentFrameId == 0)[0] ? allFrames.filter(el => el.parentFrameId == 0)[0].frameId : 0
                 switch (request.type) {
                 case 'drawAttention':
                     chrome.windows.update(sender.tab.windowId, {
@@ -81,7 +81,7 @@ chrome.runtime.onMessage.addListener(
                         css: request.payload,
                         target: {
                             tabId: sender.tab.id,
-                            frameIds: [discordFrame]
+                            frameIds: [skypeFrame]
                         }
                     });
                     break;
@@ -91,7 +91,7 @@ chrome.runtime.onMessage.addListener(
                         dest: 'PWA',
                         type: 'clientcss'
                     }, {
-                        frameId: discordFrame
+                        frameId: skypeFrame
                     });
                     chrome.storage.local.get(default_options, function (items) {
                         chrome.tabs.sendMessage(sender.tab.id, {
@@ -99,32 +99,32 @@ chrome.runtime.onMessage.addListener(
                             type: 'customTitle',
                             payload: items.custom_title
                         }, {
-                            frameId: discordFrame
+                            frameId: skypeFrame
                         });
                         chrome.tabs.sendMessage(sender.tab.id, {
                             dest: 'iframe',
                             type: 'injectcss',
                             payload: items.custom_css
                         }, {
-                            frameId: discordFrame
+                            frameId: skypeFrame
                         });
                         chrome.tabs.sendMessage(sender.tab.id, {
                             dest: 'iframe',
                             type: 'injectcss',
                             payload: items.custom_css
                         }, {
-                            frameId: discordFrame
+                            frameId: skypeFrame
                         });
                         chrome.tabs.sendMessage(sender.tab.id, {
                             dest: 'iframe',
                             type: 'injectscript',
                             payload: items.custom_js
                         }, {
-                            frameId: discordFrame
+                            frameId: skypeFrame
                         });
                     });
                     break;
-                case 'discordLoaded':
+                case 'skypeLoaded':
                     break;
                 }
             });
