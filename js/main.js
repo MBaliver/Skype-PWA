@@ -1,6 +1,6 @@
-const discordHome = "https://discord.com/channels/@me";
+const discordHome = "https://web.skype.com/";
 const modal = document.getElementById("extWarning");
-const extensionID = "edfpalahildnikdjdnmmoekoncglnblh";
+const extensionID = "edfpalahildnikdjdnmmoekoncglnblhg";
 var modalCloseButton = document.getElementById("modalClose");
 var installedExtVersion;
 var extUpdateUrl;
@@ -32,7 +32,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         .catch((error) => modal.classList.add('show'))
 		
 	if (window.navigator.windowControlsOverlay && window.navigator.windowControlsOverlay.visible) {
-		document.getElementsByName('theme-color')[0].setAttribute("content","#36393f");
+		document.getElementsByName('theme-color')[0].setAttribute("content","#302c34");
 	}
 
     window.addEventListener('message', function (e) {
