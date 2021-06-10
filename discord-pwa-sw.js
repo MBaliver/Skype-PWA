@@ -1,4 +1,4 @@
-var cacheName = 'discord-pwa';
+var cacheName = 'skype-pwa';
 var filesToCache = [
     './',
     './index.html',
