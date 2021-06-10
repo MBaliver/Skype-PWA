@@ -118,15 +118,15 @@ function waitForLoad(maxtimems, callback) {
 waitForLoad(10000, () => {
     window.postMessage({
         dest: 'PWA',
-        type: 'discordLoaded'
+        type: 'skypeLoaded'
     }, '*');
     window.postMessage({
         dest: 'background',
-        type: 'discordLoaded'
+        type: 'skypeLoaded'
     }, '*');
     window.postMessage({
         dest: 'content',
-        type: 'discordLoaded'
+        type: 'skypeLoaded'
     }, '*');
     // https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js
     const UnreadGuildUtils = WebpackModules.findByUniqueProperties(["hasUnread", "getUnreadGuilds"]);
